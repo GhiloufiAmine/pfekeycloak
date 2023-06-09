@@ -21,8 +21,6 @@ public interface DefUserService {
 
     DefUser findDefUserByEmail(String email);
 
-    DefUser getLoggedInUser();
-
     DefUser addNewUser(String username, String email, String role, boolean isNotLocked, boolean isActive) throws EmailExistException, UsernameExistException;
 
     DefUser updateUser(String currentUsername, String newUsername, String newEmail, String role, boolean isNotLocked,

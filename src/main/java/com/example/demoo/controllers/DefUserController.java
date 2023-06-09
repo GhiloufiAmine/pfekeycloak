@@ -1,6 +1,5 @@
 package com.example.demoo.controllers;
 
-import com.example.demoo.domain.DefClient;
 import com.example.demoo.domain.DefUser;
 import com.example.demoo.domain.HttpResponse;
 import com.example.demoo.domain.UserPrinciple;
@@ -24,11 +23,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 import static com.example.demoo.constants.SecurityConstant.JWT_TOKEN_HEADER;
@@ -76,62 +73,12 @@ public class DefUserController extends ExceptionHandling {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody DefUser user, HttpServletResponse response) {
+    public ResponseEntity<DefUser> login(@RequestBody DefUser user) {
         authenticate(user.getUsername(), user.getPassword());
         DefUser loginUser = defUserService.findDefUserByUsername(user.getUsername());
         UserPrinciple userPrinciple = new UserPrinciple(loginUser);
         HttpHeaders jwtHeader = getJWTHeader(userPrinciple);
-
-        if (loginUser.getDefClient() == null || isProfileIncomplete(loginUser.getDefClient())) {
-            response.setHeader("Location", "/complete-your-profile");
-            return new ResponseEntity<>(HttpStatus.FOUND);
-        } else {
-            return new ResponseEntity<>(loginUser, jwtHeader, HttpStatus.OK);
-        }
-    }
-
-    private boolean isProfileIncomplete(DefClient client) {
-        return client.getFirstName() == null || client.getLastName() == null || client.getMobile() == null ||
-                client.getBirthDate() == null;
-    }
-
-    private ResponseEntity<DefUser> firstLoginCheck(DefUser user) {
-        DefClient client = defClientService.findDefClientByUser(user);
-        if (client == null){
-            return new ResponseEntity<>(user, HttpStatus.NOT_FOUND);
-        }
-        else {
-            return new ResponseEntity<>(user, HttpStatus.OK);
-        }
-    }
-
-    @GetMapping("/first-login")
-    public ResponseEntity<DefClient> firstLogin() {
-        DefUser user = defUserService.getLoggedInUser();
-        DefClient client = defClientService.findDefClientByUser(user);
-        if (client == null) {
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(client, HttpStatus.OK);
-        }
-    }
-
-    @GetMapping("/complete-your-profile")
-    public String showProfileForm(Model model) throws EmailNotFoundException {
-        DefUser user = getCurrentUser();
-        DefClient client = defClientRepository.findDefClientByUser(user);
-        if (client == null) {
-            client = new DefClient();
-            client.setUser(user);
-            if (user != null) {
-                client.setEmail(user.getEmail());
-            }
-            else {
-                throw new EmailNotFoundException("No Email associated with this username");
-            }
-        }
-        model.addAttribute("Client", client);
-        return "profile-form";
+        return new ResponseEntity<>(loginUser, jwtHeader, HttpStatus.OK);
     }
 
     private DefUser getCurrentUser() {
@@ -141,7 +88,9 @@ public class DefUserController extends ExceptionHandling {
             String username = userDetails.getUsername();
             return defUserRepository.findDefUserByUsername(username);
         }
-        return null;
+        else {
+            return null;
+        }
     }
 
     @PostMapping("/add")

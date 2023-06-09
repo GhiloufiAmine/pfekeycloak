@@ -18,8 +18,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -143,13 +141,6 @@ public class DefUserServiceImplementation implements DefUserService, UserDetails
     @Override
     public DefUser findDefUserByEmail(String email) {
         return userRepository.findDefUserByEmail(email);
-    }
-
-    @Override
-    public DefUser getLoggedInUser() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
-        return findDefUserByUsername(username);
     }
 
     @Override

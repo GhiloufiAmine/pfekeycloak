@@ -3,16 +3,15 @@ package com.example.demoo.domain;
 import javax.persistence.*;
 
 @Entity(name = "RedFlag")
-@Table(name = "RedFlag")
 public class RedFlag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "red_flag_id")
     private Long red_flag_id;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "client_id")
-    private DefClient client_id;
+    private DefClient client;
 
     @Column(name = "red_flag_description", nullable = false)
     private String red_flag_description;
@@ -25,7 +24,7 @@ public class RedFlag {
 
     public RedFlag(Long red_flag_id, DefClient client_id, String red_flag_description, Boolean active) {
         this.red_flag_id = red_flag_id;
-        this.client_id = client_id;
+        this.client = client_id;
         this.red_flag_description = red_flag_description;
         this.active = active;
     }
@@ -39,11 +38,11 @@ public class RedFlag {
     }
 
     public DefClient getClient_id() {
-        return client_id;
+        return client;
     }
 
     public void setClient_id(DefClient client_id) {
-        this.client_id = client_id;
+        this.client = client_id;
     }
 
     public String getRed_flag_description() {

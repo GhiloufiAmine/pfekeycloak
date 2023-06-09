@@ -11,52 +11,57 @@ public class DefAgency {
     private Long agency_id;
 
     @ManyToOne
-    @JoinColumn(name = "company_id")
-    private DefCompany company_id;
+    @JoinColumn(name = "company_id", referencedColumnName = "company_id")
+    private DefCompany company;
 
     @OneToOne
-    @JoinColumn(name = "user_id")
-    private DefUser defUser_id;
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id ")
+    private DefUser user;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Column
+    private String name = "Nearer";
 
-    @Column(name = "code", nullable = false)
-    private String code;
+    @Column
+    private String agency_code = "47M292YH ";
 
-    @Column(name = "email", nullable = false)
-    private String email;
+    @Column
+    private String email = "ghiloufi.mohammedamine@gmail.com";
 
-    @Column(name = "address", nullable = false)
-    private String address;
+    @Column
+    private String address = "agency address";
 
-    @Column(name = "pick_up_address", nullable = false)
-    private String pick_up_address;
+    @Column
+    private String pick_up_address = "agency's pick up address";
 
-    @Column(name = "opening_hours", nullable = false)
-    private String opening_hours;
+    @Column
+    private String opening_hours = "From xxAM To yyPM";
 
-    @Column(name = "phone", nullable = false)
-    private Integer phone;
+    @Column
+    private Integer phone = 12345678;
 
-    @Column(name = "longitude", nullable = false)
-    private Float longitude;
+    @Column
+    private double longitude = 123456789.123;
 
-    @Column(name = "latitude", nullable = false)
-    private Float latitude;
+    @Column
+    private double latitude = 123456789.123;
 
-    @Column(name = "master")
-    private Boolean master;
+    @Column
+    private Boolean master = true;
 
-    @Column(name = "active")
-    private Boolean active;
+    @Column
+    private Boolean active = true;
 
-    public DefAgency(Long agency_id, DefCompany company_id, DefUser defUser_id, String name, String code, String email, String address, String pick_up_address, String opening_hours, Integer phone, Float longitude, Float latitude, Boolean master, Boolean active) {
+    public DefAgency() {
+    }
+
+    public DefAgency(Long agency_id, DefCompany company_id, DefUser user_id, String name, String agency_code,
+                     String email, String address, String pick_up_address, String opening_hours, Integer phone,
+                     Float longitude, Float latitude, Boolean master, Boolean active) {
         this.agency_id = agency_id;
-        this.company_id = company_id;
-        this.defUser_id = defUser_id;
+        this.company = company_id;
+        this.user = user_id;
         this.name = name;
-        this.code = code;
+        this.agency_code = agency_code;
         this.email = email;
         this.address = address;
         this.pick_up_address = pick_up_address;
@@ -77,19 +82,19 @@ public class DefAgency {
     }
 
     public DefCompany getCompany_id() {
-        return company_id;
+        return company;
     }
 
     public void setCompany_id(DefCompany company_id) {
-        this.company_id = company_id;
+        this.company = company_id;
     }
 
     public DefUser getUser_id() {
-        return defUser_id;
+        return user;
     }
 
     public void setUser_id(DefUser defUser_id) {
-        this.defUser_id = defUser_id;
+        this.user = defUser_id;
     }
 
     public String getName() {
@@ -101,11 +106,11 @@ public class DefAgency {
     }
 
     public String getCode() {
-        return code;
+        return agency_code;
     }
 
     public void setCode(String code) {
-        this.code = code;
+        this.agency_code = code;
     }
 
     public String getEmail() {
@@ -148,19 +153,17 @@ public class DefAgency {
         this.phone = phone;
     }
 
-    public Float getLongitude() {
-        return longitude;
-    }
+    public double getLongitude() { return longitude; }
 
-    public void setLongitude(Float longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
-    public Float getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(Float latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
@@ -178,8 +181,5 @@ public class DefAgency {
 
     public void setActive(Boolean active) {
         this.active = active;
-    }
-
-    public DefAgency() {
     }
 }

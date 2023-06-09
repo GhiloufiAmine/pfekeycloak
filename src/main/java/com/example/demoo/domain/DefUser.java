@@ -46,6 +46,9 @@ public class DefUser implements Serializable {
     @Column
     private String[] authorities;
 
+    //@Column
+    //private boolean profileComplete = false;
+
     public DefUser(Long user_id, DefClient client_id, String username, String email, String password,
                    boolean isActive, boolean isNotLocked, Date lastLoginDate, Date lastLoginDateDisplay,
                    Date joinDate, String role, String[] authorities) {
@@ -162,4 +165,11 @@ public class DefUser implements Serializable {
     public void setDefClient(DefClient client) {
         this.client = client;
     }
+
+    //public boolean isProfileComplete() {
+      //  return profileComplete;
+    //}
+    //public void setProfileComplete(boolean profileComplete) {
+      //  this.profileComplete = profileComplete;
+    //}
 }

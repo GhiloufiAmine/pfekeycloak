@@ -18,6 +18,10 @@ public class DefClient {
     @JoinColumn(name = "client_category_id", referencedColumnName = "client_category_id")
     private DefClientCategory clientCategory;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "flag_id" , referencedColumnName = "flag_id")
+    private RedFlag flagged;
+
     @Column
     private String firstName;
 
@@ -25,7 +29,7 @@ public class DefClient {
     private String lastName;
 
     @Column
-    private String email;
+    private String email = user.getEmail();
 
     @Column
     private Date birthDate;
@@ -33,14 +37,11 @@ public class DefClient {
     @Column
     private Integer mobile;
 
-    @Column
-    private Boolean flagged;
-
     public DefClient() {
     }
 
     public DefClient(Long client_id, DefUser user_id, DefClientCategory client_category_id, String firstName,
-                     String lastName, String email, Date birthDate, Integer mobile, Boolean flagged) {
+                     String lastName, String email, Date birthDate, Integer mobile, RedFlag flagged) {
         this.client_id = client_id;
         this.user = user_id;
         this.clientCategory = client_category_id;
@@ -108,11 +109,11 @@ public class DefClient {
         this.mobile = mobile;
     }
 
-    public Boolean getFlagged() {
+    public RedFlag getFlagged() {
         return flagged;
     }
 
-    public void setFlagged(Boolean flagged) {
+    public void setFlagged(RedFlag flagged) {
         this.flagged = flagged;
     }
 

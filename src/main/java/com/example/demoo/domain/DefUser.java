@@ -17,15 +17,20 @@ public class DefUser implements Serializable {
     @JoinColumn(name = "client_id", referencedColumnName = "client_id")
     private DefClient client;
 
-    @Column(nullable = false, unique = true)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "agency_id", referencedColumnName = "agency_id")
+    private DefAgency agency;
+
+    @Column
     private String username;
 
+    @Column
     private String email;
 
-    @Column(nullable = false, unique = true)
+    @Column
     private String password;
 
-    @Column(nullable = false)
+    @Column
     private boolean isActive;
 
     @Column
@@ -46,14 +51,15 @@ public class DefUser implements Serializable {
     @Column
     private String[] authorities;
 
-    //@Column
+    // @Column
     //private boolean profileComplete = false;
 
-    public DefUser(Long user_id, DefClient client_id, String username, String email, String password,
-                   boolean isActive, boolean isNotLocked, Date lastLoginDate, Date lastLoginDateDisplay,
-                   Date joinDate, String role, String[] authorities) {
+    public DefUser(Long user_id, DefClient client_id, DefAgency agency_id, String username, String email,
+                   String password, boolean isActive, boolean isNotLocked, Date lastLoginDate,
+                   Date lastLoginDateDisplay, Date joinDate, String role, String[] authorities) {
         this.user_id = user_id;
         this.client = client_id;
+        this.agency = agency_id;
         this.username = username;
         this.email = email;
         this.password = password;
@@ -67,7 +73,6 @@ public class DefUser implements Serializable {
     }
 
     public DefUser() {
-
     }
 
     public Long getUser_id() {
@@ -77,6 +82,18 @@ public class DefUser implements Serializable {
     public void setUser_id(Long user_id) {
         this.user_id = user_id;
     }
+
+    public DefClient getClient() {
+        return client;
+    }
+
+    public void setClient(DefClient client) {
+        this.client = client;
+    }
+
+    public DefAgency getAgency() { return agency; }
+
+    public void setAgency(DefAgency agency) { this.agency = agency; }
 
     public String getUsername() {
         return username;
@@ -158,18 +175,7 @@ public class DefUser implements Serializable {
         this.authorities = authorities;
     }
 
-    public DefClient getDefClient() {
-        return client;
-    }
+    //public boolean isProfileComplete() { return profileComplete; }
 
-    public void setDefClient(DefClient client) {
-        this.client = client;
-    }
-
-    //public boolean isProfileComplete() {
-      //  return profileComplete;
-    //}
-    //public void setProfileComplete(boolean profileComplete) {
-      //  this.profileComplete = profileComplete;
-    //}
+    //public void setProfileComplete(boolean profileComplete) { this.profileComplete = profileComplete; }
 }

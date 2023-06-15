@@ -12,30 +12,36 @@ public class Contravention {
     private Long contravention_id;
 
     @ManyToOne
-    @JoinColumn(name = "client_id")
-    private DefClient client_id;
+    @JoinColumn(name = "client_id", referencedColumnName = "client_id")
+    private DefClient client;
+
+    @OneToOne
+    @JoinColumn(name = "red_flag_id", referencedColumnName = "red_flag_id")
+    private RedFlag redFlag;
+
+    @Column
+    private String contravention_type;
+
+    @Column
+    private LocalDate contravention_date;
+
+    @Column
+    private String contravention_description;
 
     public Contravention() {
 
     }
 
-    public Contravention(Long contravention_id, DefClient client_id, String contravention_type, LocalDate contravention_date, String contravention_description, String contravention_status) {
+    public Contravention(Long contravention_id, DefClient client_id, RedFlag redFlag_id , String contravention_type,
+                         LocalDate contravention_date, String contravention_description, String contravention_status) {
         this.contravention_id = contravention_id;
-        this.client_id = client_id;
+        this.client = client_id;
+        this.redFlag = redFlag_id;
         this.contravention_type = contravention_type;
         this.contravention_date = contravention_date;
         this.contravention_description = contravention_description;
         this.contravention_status = contravention_status;
     }
-
-    @Column(name = "contravention_type", nullable = false)
-    private String contravention_type;
-
-    @Column(name = "contravention_date", nullable = false)
-    private LocalDate contravention_date;
-
-    @Column(name = "contravention_description", nullable = false)
-    private String contravention_description;
 
     public Long getContravention_id() {
         return contravention_id;
@@ -45,12 +51,20 @@ public class Contravention {
         this.contravention_id = contravention_id;
     }
 
-    public DefClient getClient_id() {
-        return client_id;
+    public DefClient getClient() {
+        return client;
     }
 
-    public void setClient_id(DefClient client_id) {
-        this.client_id = client_id;
+    public void setClient(DefClient client) {
+        this.client = client;
+    }
+
+    public RedFlag getRedFlag() {
+        return redFlag;
+    }
+
+    public void setRedFlag(RedFlag redFlag) {
+        this.redFlag = redFlag;
     }
 
     public String getContravention_type() {

@@ -11,7 +11,7 @@ public class DefVehicleCategoryType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long vehicle_category_type_id;
 
-    @Column(name = "vehicle_category_type_name", nullable = false)
+    @Column
     private String vehicle_category_type_name;
 
     public DefVehicleCategoryType() {

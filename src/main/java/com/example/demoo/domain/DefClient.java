@@ -1,8 +1,8 @@
 package com.example.demoo.domain;
 
 import javax.persistence.*;
-import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 @Entity(name = "DefClient")
 public class DefClient {
@@ -12,15 +12,23 @@ public class DefClient {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
-    DefUser user;
+    private DefUser user;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "client_category_id", referencedColumnName = "client_category_id")
     private DefClientCategory clientCategory;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn
+    private List<Contravention> contraventions;
+
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "flag_id" , referencedColumnName = "flag_id")
-    private RedFlag flagged;
+    @JoinColumn(name = "driver_licence_id" , referencedColumnName = "driver_licence_id")
+    private DriverLicence driverLicence;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn
+    private List<Payment> payments;
 
     @Column
     private String firstName;
@@ -29,7 +37,7 @@ public class DefClient {
     private String lastName;
 
     @Column
-    private String email = user.getEmail();
+    private String email;
 
     @Column
     private Date birthDate;
@@ -40,17 +48,20 @@ public class DefClient {
     public DefClient() {
     }
 
-    public DefClient(Long client_id, DefUser user_id, DefClientCategory client_category_id, String firstName,
-                     String lastName, String email, Date birthDate, Integer mobile, RedFlag flagged) {
+    public DefClient(Long client_id, DefUser user, DefClientCategory clientCategory, List<Contravention> contraventions,
+                     DriverLicence driverLicence, List<Payment> payments, String firstName, String lastName,
+                     String email, Date birthDate, Integer mobile) {
         this.client_id = client_id;
-        this.user = user_id;
-        this.clientCategory = client_category_id;
+        this.user = user;
+        this.clientCategory = clientCategory;
+        this.contraventions = contraventions;
+        this.driverLicence = driverLicence;
+        this.payments = payments;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.birthDate = birthDate;
         this.mobile = mobile;
-        this.flagged = flagged;
     }
 
     public Long getClient_id() {
@@ -61,12 +72,44 @@ public class DefClient {
         this.client_id = client_id;
     }
 
-    public DefClientCategory getClient_category_id() {
+    public DefUser getUser() {
+        return user;
+    }
+
+    public void setUser(DefUser user) {
+        this.user = user;
+    }
+
+    public DefClientCategory getClientCategory() {
         return clientCategory;
     }
 
-    public void setClient_category_id(DefClientCategory client_category_id) {
-        this.clientCategory = client_category_id;
+    public void setClientCategory(DefClientCategory clientCategory) {
+        this.clientCategory = clientCategory;
+    }
+
+    public List<Contravention> getContraventions() {
+        return contraventions;
+    }
+
+    public void setContraventions(List<Contravention> contraventions) {
+        this.contraventions = contraventions;
+    }
+
+    public DriverLicence getDriverLicence() {
+        return driverLicence;
+    }
+
+    public void setDriverLicence(DriverLicence driverLicence) {
+        this.driverLicence = driverLicence;
+    }
+
+    public List<Payment> getPayments() {
+        return payments;
+    }
+
+    public void setPayments(List<Payment> payments) {
+        this.payments = payments;
     }
 
     public String getFirstName() {
@@ -85,8 +128,8 @@ public class DefClient {
         this.lastName = lastName;
     }
 
-    public String getEmail(DefUser user) {
-        return user.getEmail();
+    public String getEmail() {
+        return email;
     }
 
     public void setEmail(String email) {
@@ -107,28 +150,5 @@ public class DefClient {
 
     public void setMobile(Integer mobile) {
         this.mobile = mobile;
-    }
-
-    public RedFlag getFlagged() {
-        return flagged;
-    }
-
-    public void setFlagged(RedFlag flagged) {
-        this.flagged = flagged;
-    }
-
-    public int getAge() {
-        Calendar birthDate = Calendar.getInstance();
-        birthDate.setTime(this.birthDate);
-        Calendar now = Calendar.getInstance();
-        int years = now.get(Calendar.YEAR) - birthDate.get(Calendar.DAY_OF_YEAR);
-        if (now.get(Calendar.DAY_OF_YEAR) < birthDate.get(Calendar.DAY_OF_YEAR)) {
-            years--;
-        }
-        return years;
-    }
-
-    public void setUser(DefUser user) {
-        this.user = user;
     }
 }

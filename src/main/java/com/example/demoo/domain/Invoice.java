@@ -9,34 +9,35 @@ public class Invoice {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "invoice")
-    private Long invoice;
+    @Column(name = "invoice_id")
+    private Long invoice_id;
 
-    @ManyToOne
-    @JoinColumn(name = "contract_id")
-    private Contract contract_id;
+    @OneToOne
+    @JoinColumn(name = "contract_id", referencedColumnName = "contract_id")
+    private Contract contract;
 
-    @Column(name = "code", nullable = false)
+    @Column
     private String code;
 
-    @Column(name = "invoice_ref", nullable = false)
+    @Column
     private String invoice_ref;
 
-    @Column(name = "client_name", nullable = false)
+    @Column
     private String client_name;
 
-    @Column(name = "creation_date", nullable = false)
+    @Column
     private LocalDate creation_date;
 
-    @Column(name = "total_payment", nullable = false)
+    @Column
     private Float total_payment;
 
     public Invoice() {
     }
 
-    public Invoice(Long invoice, Contract contract_id, String code, String invoice_ref, String client_name, LocalDate creation_date, Float total_payment) {
-        this.invoice = invoice;
-        this.contract_id = contract_id;
+    public Invoice(Long invoice_id, Contract contract_id, String code, String invoice_ref, String client_name,
+                   LocalDate creation_date, Float total_payment) {
+        this.invoice_id = invoice_id;
+        this.contract = contract_id;
         this.code = code;
         this.invoice_ref = invoice_ref;
         this.client_name = client_name;
@@ -44,20 +45,20 @@ public class Invoice {
         this.total_payment = total_payment;
     }
 
-    public Long getInvoice() {
-        return invoice;
+    public Long getInvoice_id() {
+        return invoice_id;
     }
 
-    public void setInvoice(Long invoice) {
-        this.invoice = invoice;
+    public void setInvoice_id(Long invoice_id) {
+        this.invoice_id = invoice_id;
     }
 
-    public Contract getContract_id() {
-        return contract_id;
+    public Contract getContract() {
+        return contract;
     }
 
-    public void setContract_id(Contract contract_id) {
-        this.contract_id = contract_id;
+    public void setContract(Contract contract) {
+        this.contract = contract;
     }
 
     public String getCode() {

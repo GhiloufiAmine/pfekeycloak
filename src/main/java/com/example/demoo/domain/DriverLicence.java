@@ -12,45 +12,48 @@ public class DriverLicence {
     private Long driver_licence_id;
 
     @OneToOne
-    @JoinColumn(name = "client_id")
-    private DefClient client_id;
+    @JoinColumn(name = "client_id", referencedColumnName = "client_id")
+    private DefClient client;
 
-    @Column(name = "licence_id", nullable = false)
+    @Column
     private Long licence_id;
 
-    @Column(name = "licence_number", nullable = false)
+    @Column
     private String licence_number;
 
-    @Column(name = "licence_type", nullable = false)
+    @Column
     private String licence_type;
 
-    @Column(name = "date_of_issue", nullable = false)
+    @Column
     private LocalDate date_of_issue;
 
-    @Column(name = "date_of_expiration", nullable = false)
+    @Column
     private LocalDate date_of_expiration;
 
-    @Column(name = "suspended")
+    @Column
     private Boolean suspended;
 
-    @Column(name = "address", nullable = false)
+    @Column
     private String address;
 
-    @Column(name = "first_name", nullable = false)
+    @Column
     private String first_name;
 
-    @Column(name = "last_name", nullable = false)
+    @Column
     private String last_name;
 
-    @Column(name = "date_of_birth", nullable = false)
+    @Column
     private LocalDate date_of_birth;
 
     public DriverLicence() {
     }
 
-    public DriverLicence(Long driver_licence_id, DefClient client_id, Long licence_id, String licence_number, String licence_type, LocalDate date_of_issue, LocalDate date_of_expiration, Boolean suspended, String address, String first_name, String last_name, LocalDate date_of_birth) {
+    public DriverLicence(Long driver_licence_id, DefClient client_id, Long licence_id, String licence_number,
+                         String licence_type, LocalDate date_of_issue, LocalDate date_of_expiration,
+                         Boolean suspended, String address, String first_name, String last_name,
+                         LocalDate date_of_birth) {
         this.driver_licence_id = driver_licence_id;
-        this.client_id = client_id;
+        this.client = client_id;
         this.licence_id = licence_id;
         this.licence_number = licence_number;
         this.licence_type = licence_type;
@@ -71,12 +74,12 @@ public class DriverLicence {
         this.driver_licence_id = driver_licence_id;
     }
 
-    public DefClient getClient_id() {
-        return client_id;
+    public DefClient getClient() {
+        return client;
     }
 
-    public void setClient_id(DefClient client_id) {
-        this.client_id = client_id;
+    public void setClient(DefClient client) {
+        this.client = client;
     }
 
     public Long getLicence_id() {

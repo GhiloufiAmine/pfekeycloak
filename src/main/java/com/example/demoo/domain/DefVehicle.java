@@ -12,47 +12,50 @@ public class DefVehicle {
     private Long vehicle_id;
 
     @ManyToOne
-    @JoinColumn(name = "agency_id")
+    @JoinColumn(name = "agency_id", referencedColumnName = "agency_id")
     private DefAgency agency_id;
 
     @ManyToOne
-    @JoinColumn(name = "vehicle_model_id")
-    private DefVehicleModel vehicle_model_id;
+    @JoinColumn(name = "vehicle_model_id", referencedColumnName = "vehicle_model_id")
+    private DefVehicleModel model_id;
 
-    @Column(name = "color", nullable = false)
+    @Column
     private String color;
 
-    @Column(name = "registration_number", nullable = false)
+    @Column
     private String registration_number;
 
-    @Column(name = "description", nullable = false)
+    @Column
     private String description;
 
-    @Column(name = "start_of_service_date", nullable = false)
+    @Column
     private LocalDate start_of_service_date;
 
-    @Column(name = "end_of_service_date", nullable = false)
+    @Column
     private LocalDate end_of_service_date;
 
-    @Column(name = "contract_start_date", nullable = false)
+    @Column
     private LocalDate contract_start_date;
 
-    @Column(name = "contract_end_date", nullable = false)
+    @Column
     private LocalDate contract_end_date;
 
-    @Column(name = "multi_agency")
+    @Column
     private Boolean multi_agency;
 
-    @Column(name = "active")
+    @Column
     private Boolean active;
 
     public DefVehicle() {
     }
 
-    public DefVehicle(Long vehicle_id, DefAgency agency_id, DefVehicleModel vehicle_model_id, String color, String registration_number, String description, LocalDate start_of_service_date, LocalDate end_of_service_date, LocalDate contract_start_date, LocalDate contract_end_date, Boolean multi_agency, Boolean active) {
+    public DefVehicle(Long vehicle_id, DefAgency agency_id, DefVehicleModel model_id, String color,
+                      String registration_number, String description, LocalDate start_of_service_date,
+                      LocalDate end_of_service_date, LocalDate contract_start_date, LocalDate contract_end_date,
+                      Boolean multi_agency, Boolean active) {
         this.vehicle_id = vehicle_id;
         this.agency_id = agency_id;
-        this.vehicle_model_id = vehicle_model_id;
+        this.model_id = model_id;
         this.color = color;
         this.registration_number = registration_number;
         this.description = description;
@@ -80,12 +83,12 @@ public class DefVehicle {
         this.agency_id = agency_id;
     }
 
-    public DefVehicleModel getVehicle_model_id() {
-        return vehicle_model_id;
+    public DefVehicleModel getModel_id() {
+        return model_id;
     }
 
-    public void setVehicle_model_id(DefVehicleModel vehicle_model_id) {
-        this.vehicle_model_id = vehicle_model_id;
+    public void setModel_id(DefVehicleModel model_id) {
+        this.model_id = model_id;
     }
 
     public String getColor() {

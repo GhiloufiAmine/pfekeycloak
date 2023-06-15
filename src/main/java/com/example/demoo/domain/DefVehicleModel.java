@@ -1,6 +1,7 @@
 package com.example.demoo.domain;
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Entity(name = "DefVehicleModel")
@@ -12,44 +13,51 @@ public class DefVehicleModel {
     private Long vehicle_model_id;
 
     @ManyToOne
-    @JoinColumn(name = "vehicle_category_id")
+    @JoinColumn(name = "vehicle_category_id", referencedColumnName = "vehicle_category_id")
     private DefVehicleCategory vehicle_category_id;
 
     @ManyToOne
-    @JoinColumn(name = "brand_id")
-    private DefBrand brand_id;
+    @JoinColumn(name = "brand_id", referencedColumnName = "brand_id")
+    private DefBrand brand;
 
-    @Column(name = "name", nullable = false)
+    @OneToMany
+    @JoinColumn
+    private List<DefVehicle> vehicles;
+
+    @Column
     private String name;
 
-    @Column(name = "version", nullable = false)
+    @Column
     private String version;
 
-    @Column(name = "year", nullable = false)
+    @Column
     private Integer year;
 
-    @Column(name = "horse_power", nullable = false)
+    @Column
     private Integer horse_power;
 
-    @Column(name = "seat_number", nullable = false)
+    @Column
     private Integer seat_number;
 
-    @Column(name = "fuel_tank_capacity", nullable = false)
+    @Column
     private Integer fuel_tank_capacity;
 
-    @Column(name = "active")
+    @Column
     private Boolean active;
 
-    @Column(name = "master")
+    @Column
     private Boolean master;
 
     public DefVehicleModel() {
     }
 
-    public DefVehicleModel(Long vehicle_model_id, DefVehicleCategory vehicle_category_id, DefBrand brand_id, String name, String version, Integer year, Integer horse_power, Integer seat_number, Integer fuel_tank_capacity, Boolean active, Boolean master) {
+    public DefVehicleModel(Long vehicle_model_id, DefVehicleCategory vehicle_category_id, DefBrand brand,
+                           List<DefVehicle> vehicles, String name, String version, Integer year, Integer horse_power,
+                           Integer seat_number, Integer fuel_tank_capacity, Boolean active, Boolean master) {
         this.vehicle_model_id = vehicle_model_id;
         this.vehicle_category_id = vehicle_category_id;
-        this.brand_id = brand_id;
+        this.brand = brand;
+        this.vehicles = vehicles;
         this.name = name;
         this.version = version;
         this.year = year;
@@ -76,12 +84,20 @@ public class DefVehicleModel {
         this.vehicle_category_id = vehicle_category_id;
     }
 
-    public DefBrand getBrand_id() {
-        return brand_id;
+    public DefBrand getBrand() {
+        return brand;
     }
 
-    public void setBrand_id(DefBrand brand_id) {
-        this.brand_id = brand_id;
+    public void setBrand(DefBrand brand) {
+        this.brand = brand;
+    }
+
+    public List<DefVehicle> getVehicles() {
+        return vehicles;
+    }
+
+    public void setVehicles(List<DefVehicle> vehicles) {
+        this.vehicles = vehicles;
     }
 
     public String getName() {

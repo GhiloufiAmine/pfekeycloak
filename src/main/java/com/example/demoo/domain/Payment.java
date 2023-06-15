@@ -1,7 +1,7 @@
 package com.example.demoo.domain;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.util.Date;
 
 @Entity(name = "Payment")
 @Table(name = "Payment")
@@ -13,48 +13,52 @@ public class Payment {
     private Long payment_id;
 
     @ManyToOne
-    @JoinColumn(name = "client_id")
-    private DefClient client_id;
+    @JoinColumn(name = "client_id", referencedColumnName = "client_id")
+    private DefClient client;
 
-    @Column(name = "amount", nullable = false)
+    @OneToOne
+    @JoinColumn(name = "contract_id", referencedColumnName = "contract_id")
+    private Contract contract;
+
+    @Column
     private Float amount;
 
-    @Column(name = "total_VAT", nullable = false)
+    @Column
     private Float total_VAT;
 
-    @Column(name = "total_Excl_TAX", nullable = false)
+    @Column
     private Float total_Excl_TAX;
 
-    @Column(name = "total_amount_paid", nullable = false)
+    @Column
     private Float total_amount_paid;
 
-    @Column(name = "credit_card_id", nullable = false)
+    @Column
     private Long credit_card_id;
 
-    @Column(name = "bank_transfer_number", nullable = false)
+    @Column
     private Integer bank_transfer_number;
 
-    @Column(name = "check_number", nullable = false)
+    @Column
     private Integer check_number;
 
-    @Column(name = "payment_type_id", nullable = false)
+    @Column
     private Integer payment_type_id;
 
-    @Column(name = "creation_date", nullable = false)
-    private LocalDate creation_date;
+    @Column
+    private Date creation_date;
 
-    @Column(name = "expiration_date", nullable = false)
-    private LocalDate expiration_date;
+    @Column
+    private Date expiration_date;
 
     public Payment() {
     }
 
-    public Payment(Long payment_id, DefClient client_id, Float amount, Float total_VAT, Float total_Excl_TAX,
-                   Float total_amount_paid, Long credit_card_id, Integer bank_transfer_number, Integer check_number,
-                   Integer payment_type_id, LocalDate creation_date,
-                   LocalDate expiration_date) {
+    public Payment(Long payment_id, DefClient client_id, Contract contract_id , Float amount, Float total_VAT,
+                   Float total_Excl_TAX, Float total_amount_paid, Long credit_card_id, Integer bank_transfer_number,
+                   Integer check_number, Integer payment_type_id, Date creation_date, Date expiration_date){
         this.payment_id = payment_id;
-        this.client_id = client_id;
+        this.client = client_id;
+        this.contract = contract_id;
         this.amount = amount;
         this.total_VAT = total_VAT;
         this.total_Excl_TAX = total_Excl_TAX;
@@ -75,12 +79,20 @@ public class Payment {
         this.payment_id = payment_id;
     }
 
-    public DefClient getClient_id() {
-        return client_id;
+    public DefClient getClient() {
+        return client;
     }
 
-    public void setClient_id(DefClient client_id) {
-        this.client_id = client_id;
+    public void setClient(DefClient client) {
+        this.client = client;
+    }
+
+    public Contract getContract() {
+        return contract;
+    }
+
+    public void setContract(Contract contract) {
+        this.contract = contract;
     }
 
     public Float getAmount() {
@@ -147,19 +159,19 @@ public class Payment {
         this.payment_type_id = payment_type_id;
     }
 
-    public LocalDate getCreation_date() {
+    public Date getCreation_date() {
         return creation_date;
     }
 
-    public void setCreation_date(LocalDate creation_date) {
+    public void setCreation_date(Date creation_date) {
         this.creation_date = creation_date;
     }
 
-    public LocalDate getExpiration_date() {
+    public Date getExpiration_date() {
         return expiration_date;
     }
 
-    public void setExpiration_date(LocalDate expiration_date) {
+    public void setExpiration_date(Date expiration_date) {
         this.expiration_date = expiration_date;
     }
 }

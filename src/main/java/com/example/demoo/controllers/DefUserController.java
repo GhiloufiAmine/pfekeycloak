@@ -29,7 +29,7 @@ import static com.example.demoo.constants.SecurityConstant.JWT_TOKEN_HEADER;
 
 
 @RestController
-@RequestMapping(path = {"/", "/user"})
+@RequestMapping(path = {"/api", "/api/user"})
 public class DefUserController extends ExceptionHandling {
 
     public static final String EMAIL_SENT = "An email with a new password is sent to : ";
@@ -39,7 +39,7 @@ public class DefUserController extends ExceptionHandling {
     private DefUserRepository defUserRepository;
 
     private DefClientRepository defClientRepository;
-    private AuthenticationManager authenticationManager;
+    private AuthenticationManager auth;
     private JWTTokenProvider jwtTokenProvider;
 
     @Autowired
@@ -47,13 +47,13 @@ public class DefUserController extends ExceptionHandling {
                              DefClientService defClientService,
                              DefUserRepository defUserRepository,
                              DefClientRepository defClientRepository,
-                             AuthenticationManager authenticationManager,
+                             //AuthenticationManager auth,
                              JWTTokenProvider jwtTokenProvider) {
         this.defUserService = defUserService;
         this.defClientService = defClientService;
         this.defUserRepository = defUserRepository;
         this.defClientRepository = defClientRepository;
-        this.authenticationManager = authenticationManager;
+        //this.authenticationManager = auth;
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
@@ -150,6 +150,6 @@ public class DefUserController extends ExceptionHandling {
     }
 
     private void authenticate(String username, String password) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+        auth.authenticate(new UsernamePasswordAuthenticationToken(username, password));
     }
 }

@@ -1,6 +1,7 @@
 package com.example.demoo.domain;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity(name = "DefAgency")
 @Table(name = "DefAgency")
@@ -18,6 +19,14 @@ public class DefAgency {
     @JoinColumn(name = "user_id", referencedColumnName = "user_id ")
     private DefUser user;
 
+    @OneToMany
+    @JoinColumn
+    private List<Contract> contracts;
+
+    @OneToMany
+    @JoinColumn
+    private List<DefVehicle> vehicles;
+
     @Column
     private String name = "Nearer";
 
@@ -25,7 +34,7 @@ public class DefAgency {
     private String agency_code = "47M292YH ";
 
     @Column
-    private String email = "ghiloufi.mohammedamine@gmail.com";
+    private String email = "agency_email@domain.com";
 
     @Column
     private String address = "agency address";
@@ -34,7 +43,7 @@ public class DefAgency {
     private String pick_up_address = "agency's pick up address";
 
     @Column
-    private String opening_hours = "From xxAM To yyPM";
+    private String opening_hours = "From xxAM To yyPM, From Monday To Friday";
 
     @Column
     private Integer phone = 12345678;
@@ -51,15 +60,15 @@ public class DefAgency {
     @Column
     private Boolean active = true;
 
-    public DefAgency() {
-    }
-
-    public DefAgency(Long agency_id, DefCompany company_id, DefUser user_id, String name, String agency_code,
-                     String email, String address, String pick_up_address, String opening_hours, Integer phone,
-                     Float longitude, Float latitude, Boolean master, Boolean active) {
+    public DefAgency(Long agency_id, DefCompany company, DefUser user, List<Contract> contracts,
+                     List<DefVehicle> vehicles, String name, String agency_code, String email, String address,
+                     String pick_up_address, String opening_hours, Integer phone, double longitude, double latitude,
+                     Boolean master, Boolean active) {
         this.agency_id = agency_id;
-        this.company = company_id;
-        this.user = user_id;
+        this.company = company;
+        this.user = user;
+        this.contracts = contracts;
+        this.vehicles = vehicles;
         this.name = name;
         this.agency_code = agency_code;
         this.email = email;
@@ -73,6 +82,10 @@ public class DefAgency {
         this.active = active;
     }
 
+    public DefAgency() {
+
+    }
+
     public Long getAgency_id() {
         return agency_id;
     }
@@ -81,20 +94,36 @@ public class DefAgency {
         this.agency_id = agency_id;
     }
 
-    public DefCompany getCompany_id() {
+    public DefCompany getCompany() {
         return company;
     }
 
-    public void setCompany_id(DefCompany company_id) {
-        this.company = company_id;
+    public void setCompany(DefCompany company) {
+        this.company = company;
     }
 
-    public DefUser getUser_id() {
+    public DefUser getUser() {
         return user;
     }
 
-    public void setUser_id(DefUser defUser_id) {
-        this.user = defUser_id;
+    public void setUser(DefUser user) {
+        this.user = user;
+    }
+
+    public List<Contract> getContracts() {
+        return contracts;
+    }
+
+    public void setContracts(List<Contract> contracts) {
+        this.contracts = contracts;
+    }
+
+    public List<DefVehicle> getVehicles() {
+        return vehicles;
+    }
+
+    public void setVehicles(List<DefVehicle> vehicles) {
+        this.vehicles = vehicles;
     }
 
     public String getName() {
@@ -105,12 +134,12 @@ public class DefAgency {
         this.name = name;
     }
 
-    public String getCode() {
+    public String getAgency_code() {
         return agency_code;
     }
 
-    public void setCode(String code) {
-        this.agency_code = code;
+    public void setAgency_code(String agency_code) {
+        this.agency_code = agency_code;
     }
 
     public String getEmail() {
@@ -153,7 +182,9 @@ public class DefAgency {
         this.phone = phone;
     }
 
-    public double getLongitude() { return longitude; }
+    public double getLongitude() {
+        return longitude;
+    }
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;

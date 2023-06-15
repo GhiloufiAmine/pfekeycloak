@@ -2,6 +2,7 @@ package com.example.demoo.domain;
 
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Entity(name = "DefCompany")
@@ -12,26 +13,33 @@ public class DefCompany {
     @Column(name = "company_id")
     private Long company_id;
 
-    @Column(name = "company_name", nullable = false)
+    @OneToMany
+    @JoinColumn
+    private List<DefAgency> agencies;
+
+    @Column
     private String company_name;
 
-    @Column(name = "city", nullable = false)
+    @Column
     private String city;
 
-    @Column(name = "assistance_number", nullable = false)
-    private String assistance_number;
+    @Column
+    private Integer assistance_number;
 
-    @Column(name = "social_capital", nullable = false)
+    @Column
     private Float social_capital;
 
-    @Column(name = "master", nullable = false)
+    @Column
     private Boolean master;
 
     public DefCompany() {
+
     }
 
-    public DefCompany(Long company_id, String company_name, String city, String assistance_number, Float social_capital, Boolean master) {
+    public DefCompany(Long company_id, List<DefAgency> agencies, String company_name, String city,
+                      Integer assistance_number, Float social_capital, Boolean master) {
         this.company_id = company_id;
+        this.agencies = agencies;
         this.company_name = company_name;
         this.city = city;
         this.assistance_number = assistance_number;
@@ -45,6 +53,14 @@ public class DefCompany {
 
     public void setCompany_id(Long company_id) {
         this.company_id = company_id;
+    }
+
+    public List<DefAgency> getAgencies() {
+        return agencies;
+    }
+
+    public void setAgencies(List<DefAgency> agencies) {
+        this.agencies = agencies;
     }
 
     public String getCompany_name() {
@@ -63,11 +79,11 @@ public class DefCompany {
         this.city = city;
     }
 
-    public String getAssistance_number() {
+    public Integer getAssistance_number() {
         return assistance_number;
     }
 
-    public void setAssistance_number(String assistance_number) {
+    public void setAssistance_number(Integer assistance_number) {
         this.assistance_number = assistance_number;
     }
 

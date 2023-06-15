@@ -1,6 +1,7 @@
 package com.example.demoo.domain;
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Entity(name = "DefBrand")
@@ -10,17 +11,31 @@ public class DefBrand {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long brand_id;
 
-    @Column(name = "name", nullable = false)
+    @OneToMany
+    @JoinColumn
+    private List<DefVehicleModel> models;
+
+    @OneToMany
+    @JoinColumn
+    private List<DefVehicleCategory> categories;
+
+    @Column
     private String name;
 
-    @Column(name = "active")
+    @Column
     private Boolean active;
 
-    public DefBrand(Long brand_id, String name, Boolean active, byte[] logo) {
+    public DefBrand(Long brand_id, List<DefVehicleModel> models, List<DefVehicleCategory> categories, String name,
+                    Boolean active) {
         this.brand_id = brand_id;
+        this.models = models;
+        this.categories = categories;
         this.name = name;
         this.active = active;
-        this.logo = logo;
+    }
+
+    public DefBrand() {
+
     }
 
     public Long getBrand_id() {
@@ -29,6 +44,22 @@ public class DefBrand {
 
     public void setBrand_id(Long brand_id) {
         this.brand_id = brand_id;
+    }
+
+    public List<DefVehicleModel> getModels() {
+        return models;
+    }
+
+    public void setModels(List<DefVehicleModel> models) {
+        this.models = models;
+    }
+
+    public List<DefVehicleCategory> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<DefVehicleCategory> categories) {
+        this.categories = categories;
     }
 
     public String getName() {
@@ -45,19 +76,5 @@ public class DefBrand {
 
     public void setActive(Boolean active) {
         this.active = active;
-    }
-
-    public byte[] getLogo() {
-        return logo;
-    }
-
-    public void setLogo(byte[] logo) {
-        this.logo = logo;
-    }
-
-    @Lob
-    private byte[] logo;
-
-    public DefBrand() {
     }
 }

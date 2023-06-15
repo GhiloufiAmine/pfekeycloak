@@ -11,16 +11,16 @@ public class DefVehicleCategory {
     private Long vehicle_category_id;
 
     @ManyToOne
-    @JoinColumn(name = "vehicle_category_type_id")
+    @JoinColumn(name = "vehicle_category_type_id", referencedColumnName = "vehicle_category_type_id")
     private DefVehicleCategoryType vehicle_category_type_id;
 
-    @Column(name = "vehicle_category_name", nullable = false)
+    @Column
     private String vehicle_category_name;
 
-    @Column(name = "master")
+    @Column
     private Boolean master;
 
-    @Column(name = "active")
+    @Column
     private Boolean active;
 
     public DefVehicleCategory() {

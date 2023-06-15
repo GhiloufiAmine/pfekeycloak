@@ -11,12 +11,16 @@ public class Contract {
     private Long contract_id;
 
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = "agency_id", referencedColumnName = "agency_id")
     private DefAgency agency;
 
     @OneToOne
-    @JoinColumn
-    private Payment payment_id;
+    @JoinColumn(name = "payment_id", referencedColumnName = "payment_id")
+    private Payment payment;
+
+    @OneToOne
+    @JoinColumn(name = "invoice_id", referencedColumnName = "invoice_id")
+    private Invoice invoice;
 
     @Column
     private String code;
@@ -50,10 +54,14 @@ public class Contract {
 
     }
 
-    public Contract(Long contract_id, DefAgency agency_id, Payment payment_id, String code, String contract_status, LocalDate pick_date_reservation, LocalDate return_date_reservation, LocalDate creation_date, Float rent_amount, Float total_price, Integer mileage, Boolean confirmed) {
+    public Contract(Long contract_id, DefAgency agency_id, Payment payment_id, Invoice invoice_id , String code,
+                    String contract_status, LocalDate pick_date_reservation, LocalDate return_date_reservation,
+                    LocalDate creation_date, Float rent_amount, Float total_price, Integer mileage,
+                    Boolean confirmed) {
         this.contract_id = contract_id;
         this.agency = agency_id;
-        this.payment_id = payment_id;
+        this.payment = payment_id;
+        this.invoice = invoice_id;
         this.code = code;
         this.contract_status = contract_status;
         this.pick_date_reservation = pick_date_reservation;
@@ -73,20 +81,28 @@ public class Contract {
         this.contract_id = contract_id;
     }
 
-    public DefAgency getAgency_id() {
+    public DefAgency getAgency() {
         return agency;
     }
 
-    public void setAgency_id(DefAgency agency_id) {
-        this.agency = agency_id;
+    public void setAgency(DefAgency agency) {
+        this.agency = agency;
     }
 
-    public Payment getPayment_id() {
-        return payment_id;
+    public Payment getPayment() {
+        return payment;
     }
 
-    public void setPayment_id(Payment payment_id) {
-        this.payment_id = payment_id;
+    public void setPayment(Payment payment) {
+        this.payment = payment;
+    }
+
+    public Invoice getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
     }
 
     public String getCode() {
